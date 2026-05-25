@@ -1,90 +1,71 @@
+# ==========================================
+# IDE & System Files
+# ==========================================
 .vscode/settings.json
-/c/difference-of-squares/.exercism
-c/difference-of-squares/HELP.md
-c/difference-of-squares/makefile
-c/difference-of-squares/README.md
-c/difference-of-squares/test-framework/unity.c
-c/difference-of-squares/test-framework/unity.h
-c/difference-of-squares/test-framework/unity_internals.h
-c/difference-of-squares/test_difference_of_squares.c
-c/leap/.exercism/config.json
-c/leap/.exercism/metadata.json
-c/leap/HELP.md
-c/leap/makefile
-c/leap/README.md
-c/leap/test-framework/unity.c
-c/leap/test-framework/unity.h
-c/leap/test-framework/unity_internals.h
-c/leap/test_leap.c
-c/grains/.exercism/config.json
-c/grains/.exercism/metadata.json
-c/grains/HELP.md
-c/grains/makefile
-c/grains/README.md
-c/grains/test-framework/unity.c
-c/grains/test-framework/unity.h
-c/grains/test-framework/unity_internals.h
-c/grains/test_grains.c
-c/resistor-color/.exercism/config.json
-c/resistor-color/.exercism/metadata.json
-c/resistor-color/HELP.md
-c/resistor-color/makefile
-c/resistor-color/README.md
-c/resistor-color/test-framework/unity.c
-c/resistor-color/test-framework/unity.h
-c/resistor-color/test-framework/unity_internals.h
-c/resistor-color/test_resistor_color.c
-c/collatz-conjecture/.exercism/config.json
-c/collatz-conjecture/.exercism/metadata.json
-c/collatz-conjecture/HELP.md
-c/collatz-conjecture/makefile
-c/collatz-conjecture/README.md
-c/collatz-conjecture/test-framework/unity.c
-c/collatz-conjecture/test-framework/unity.h
-c/collatz-conjecture/test-framework/unity_internals.h
-c/collatz-conjecture/test_collatz_conjecture.c
-c/resistor-color-duo/.exercism/config.json
-c/resistor-color-duo/.exercism/metadata.json
-c/resistor-color-duo/HELP.md
-c/resistor-color-duo/makefile
-c/resistor-color-duo/README.md
-c/resistor-color-duo/test-framework/unity.c
-c/resistor-color-duo/test-framework/unity.h
-c/resistor-color-duo/test-framework/unity_internals.h
-c/resistor-color-duo/test_resistor_color_duo.c
-c/hamming/.exercism/config.json
-c/hamming/.exercism/metadata.json
+.vscode/
+
+# ==========================================
+# Exercism Metadata
+# ==========================================
+# Ignore the exercism metadata directory in all exercises
+**/.exercism/
+
+# ==========================================
+# Exercise Boilerplate & Documentation
+# ==========================================
+# Ignore instructions and help files inside exercise directories
+*/*/HELP.md
+*/*/README.md
+
+# ==========================================
+# Language-Specific Rules
+# ==========================================
+
+# --- C & C++ ---
+# Ignore build configuration files inside exercise directories
+*/*/makefile
+*/*/CMakeLists.txt
+
+# Ignore test frameworks and unit tests inside exercise directories
+*/*/test-framework/
+*/*/test_*.c
+*/*/*_test.cpp
+*/*/test/
+
+# Ignore compiled binaries, objects, and debug symbols
+*.o
+*.out
+*.exe
+*.obj
+*.pdb
+*.gch
+
+# --- Python ---
+# Ignore python compilation and test caches
+**/__pycache__/
+**/.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Rust ---
+# Ignore Rust build target directories and locks
+**/target/
+**/Cargo.lock
+**/*.rs.bk
+
+# --- Elixir ---
+# Ignore Mix build directories, dependencies, and cover reports
+**/_build/
+**/deps/
+**/cover/
+**/doc/
+**/.elixir_ls/
+*.ez
+erl_crash.dump
+
+# ==========================================
+# Miscellaneous / Specific Temp Files
+# ==========================================
 c/hamming/diffie-hellman.js
-c/hamming/HELP.md
-c/hamming/makefile
-c/hamming/README.md
-c/hamming/test-framework/unity.c
-c/hamming/test-framework/unity.h
-c/hamming/test-framework/unity_internals.h
-c/hamming/test_hamming.c
-c/rna-transcription/.exercism/config.json
-c/rna-transcription/.exercism/metadata.json
-c/rna-transcription/HELP.md
-c/rna-transcription/makefile
-c/rna-transcription/README.md
-c/rna-transcription/test-framework/unity.c
-c/rna-transcription/test-framework/unity.h
-c/rna-transcription/test-framework/unity_internals.h
-c/binary/.exercism/config.json
-c/binary/.exercism/metadata.json
-c/binary/HELP.md
-c/binary/makefile
-c/binary/README.md
-c/binary/test-framework/unity.c
-c/binary/test-framework/unity.h
-c/binary/test-framework/unity_internals.h
-c/binary/test_binary.c
-c/eliuds-eggs/.exercism/config.json
-c/eliuds-eggs/.exercism/metadata.json
-c/eliuds-eggs/HELP.md
-c/eliuds-eggs/makefile
-c/eliuds-eggs/README.md
-c/eliuds-eggs/test-framework/unity.c
-c/eliuds-eggs/test-framework/unity.h
-c/eliuds-eggs/test-framework/unity_internals.h
-c/eliuds-eggs/test_eliuds_eggs.c
+
