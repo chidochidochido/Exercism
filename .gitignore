@@ -69,3 +69,4 @@ erl_crash.dump
 # ==========================================
 c/hamming/diffie-hellman.js
 
+c/isogram/word-count.js
