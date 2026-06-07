@@ -1,26 +1,6 @@
 #include "leap.h"
 
-#define LEAP_YEAR     true
-#define NOT_LEAP_YEAR false
-
-bool leap_year(int testYear)
+bool leap_year(int year)
 {
-	bool isLeap = LEAP_YEAR;
-	
-	if(testYear % 4 == 0)
-	{
-		if(testYear % 100 == 0)
-		{
-			if(testYear % 400 != 0)
-			{
-				isLeap = NOT_LEAP_YEAR;
-			}
-		}
-    }
-	else
-	{
-		isLeap = NOT_LEAP_YEAR;
-	}
-
-	return isLeap;
+    return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
 }
