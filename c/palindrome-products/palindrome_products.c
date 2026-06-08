@@ -1,115 +1,150 @@
 #include "palindrome_products.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-#define SMALLER false
-#define LARGER  true
+// Helper to check if a number is a palindrome mathematically
+static bool is_palindrome(int n)
+{
+    if (n < 0) return false;
+    int reversed = 0;
+    int original = n;
+    while (n > 0)
+    {
+        reversed = reversed * 10 + n % 10;
+        n /= 10;
+    }
+    return original == reversed;
+}
 
-// Given a range of numbers, find the largest and smallest palindromes which
-// are products of two numbers within that range.
+// Helper to add a factor pair to a linked list
+static factor_t *add_factor(factor_t *head, int a, int b)
+{
+    // Ensure smaller factor is first for consistency
+    if (a > b)
+    {
+        int temp = a;
+        a = b;
+        b = temp;
+    }
 
-// Your solution should return the largest and smallest palindromes, along with the factors of each within the range.
-// If the largest or smallest palindrome has more than one pair of factors within the range, then return all the pairs.
+    // Check for duplicates
+    factor_t *curr = head;
+    while (curr != NULL)
+    {
+        if (curr->factor_a == a && curr->factor_b == b)
+        {
+            return head; // Already in the list
+        }
+        curr = curr->next;
+    }
 
-// Plan:
-// Find out the product.
-// Check if whether the product is a palyndrome.
+    // Allocate new node
+    factor_t *new_node = malloc(sizeof(factor_t));
+    if (!new_node) return head;
 
-// If yes, then check if it is either the smallest or the largest.
-// If yes, then store the factors (store in a stack)
-// Replace the maximum/minimum value accordingly
-static bool is_palindrome(int);
-static void initializeProductInfo(product_t *, int from, int to);
+    new_node->factor_a = a;
+    new_node->factor_b = b;
+    new_node->next = head; // Prepend to the list
+    return new_node;
+}
+
+// Helper to free a linked list of factors
+static void free_factors(factor_t *f)
+{
+    while (f != NULL)
+    {
+        factor_t *next = f->next;
+        free(f);
+        f = next;
+    }
+}
 
 product_t *get_palindrome_product(int from, int to)
 {
-    int i_product;
-    product_t s_productInfo;
+    // Allocate memory for the result on the heap
+    product_t *res = malloc(sizeof(product_t));
+    if (!res) return NULL;
 
-    initializeProductInfo(&s_productInfo);
-    
-    for(int i = from; i <= to; i++)
+    res->smallest = 0;
+    res->largest = 0;
+    res->factors_sm = NULL;
+    res->factors_lg = NULL;
+    memset(res->error, 0, sizeof(res->error));
+
+    // Handle invalid range
+    if (from > to)
     {
-        for(int j = from; j <= to; j++)
+        snprintf(res->error, MAXERR, "invalid input: min is %d and max is %d", from, to);
+        return res;
+    }
+
+    bool found = false;
+
+    for (int i = from; i <= to; ++i)
+    {
+        // Start j from i to avoid checking permutations like (i, j) and (j, i)
+        for (int j = i; j <= to; ++j)
         {
-            // Find out the product.
-            i_product = i*j;
-            
-            // Check if whether the product is a palyndrome.
-            if(is_palindrome(i_product))
+            int prod = i * j;
+
+            if (is_palindrome(prod))
             {
-                // If yes, then check if it is either the smallest or the largest.
-                if(i_product < s_productInfo.smallest)
+                if (!found)
                 {
-                    free_product(&s_productInfo);
-                    s_productInfo.smallest = i_product;
-                    pushFactors(&s_productInfo, to, from, SMALLER);
+                    // First palindrome found
+                    res->smallest = prod;
+                    res->largest = prod;
+                    res->factors_sm = add_factor(NULL, i, j);
+                    res->factors_lg = add_factor(NULL, i, j);
+                    found = true;
                 }
-                else if(i_product == s_productInfo.smallest)
+                else
                 {
-                    pushFactors(&s_productInfo, to, from, SMALLER);
+                    // Check if it's the new smallest or same as smallest
+                    if (prod < res->smallest)
+                    {
+                        res->smallest = prod;
+                        free_factors(res->factors_sm);
+                        res->factors_sm = add_factor(NULL, i, j);
+                    }
+                    else if (prod == res->smallest)
+                    {
+                        res->factors_sm = add_factor(res->factors_sm, i, j);
+                    }
+
+                    // Check if it's the new largest or same as largest
+                    if (prod > res->largest)
+                    {
+                        res->largest = prod;
+                        free_factors(res->factors_lg);
+                        res->factors_lg = add_factor(NULL, i, j);
+                    }
+                    else if (prod == res->largest)
+                    {
+                        res->factors_lg = add_factor(res->factors_lg, i, j);
+                    }
                 }
-                else if(i_product == s_productInfo.largest)
-                {
-                    pushFactors(&s_productInfo, to, from, LARGER);
-                }
-                else if(i_product > s_productInfo.largest)
-                {
-                    free_product(&s_productInfo);
-                    s_productInfo.largest = i_product;
-                    pushFactors(&s_productInfo, to, from, LARGER);
-                }
-                
             }
         }
     }
 
-    return 0;
-}
-
-static void initializeProductInfo(product_t* ps_productInfo)
-{
-    ps_productInfo->largest = -1;
-    ps_productInfo->smallest = -1;
-    ps_productInfo->factors_lg = NULL;
-    ps_productInfo->factors_sm = NULL;
-
-}
-
-static bool is_palindrome(int product)
-{
-     // Convert the product to a string
-    char str_product[20]; // Assuming the product won't exceed 20 digits
-    snprintf(str_product, sizeof(str_product), "%d", product);
-
-    // Check if the string is a palindrome
-    int len = strlen(str_product);
-    for (int i = 0; i < len / 2; i++) {
-        if (str_product[i] != str_product[len - 1 - i]) {
-            return false; // Not a palindrome
-        }
-    }
-    return true; // Is a palindrome
-}
-
-static pushFactors(product_t *s_productInfo, int to, int from, bool sm_lg)
-{
-    
-    
-    if(sm_lg == SMALLER)
+    // Handle case where no palindrome is found in the range
+    if (!found)
     {
-        s_productInfo->factors_lg = 
+        snprintf(res->error, MAXERR, "no palindrome with factors in the range %d to %d", from, to);
     }
-    else
-    {
 
-    }
+    return res;
 }
 
 void free_product(product_t *p)
 {
-    p->largest = -1;
-    p->smallest = -1;
-    p->factors_lg = NULL;
-    p->factors_sm = NULL;
+    if (p != NULL)
+    {
+        free_factors(p->factors_sm);
+        free_factors(p->factors_lg);
+        free(p);
+    }
 }
