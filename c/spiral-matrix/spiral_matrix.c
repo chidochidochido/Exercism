@@ -10,10 +10,16 @@ spiral_matrix_t* spiral_matrix_create(int spiral_size) {
         result->matrix = NULL;
     }
     else {
+        // 1. Allocate the array of row pointers (as usual)
         result->matrix = malloc(spiral_size * sizeof(int*));
 
+        // 2. Allocate ALL the integers in one single block of memory
+        int* all_data = malloc(spiral_size * spiral_size * sizeof(int));
+
+        // 3. Aim the row pointers at the correct offsets within that single block
         for(int i = 0; i < spiral_size; i++) {
-            result->matrix[i] = malloc(spiral_size * sizeof(int));
+        result->matrix[i] = &all_data[i * spiral_size];
+        // or equivalently: all_data + (i * spiral_size)
         }
     
         int top_row = 0;
@@ -55,11 +61,9 @@ spiral_matrix_t* spiral_matrix_create(int spiral_size) {
 void spiral_matrix_destroy(spiral_matrix_t* matrix) {
     if(matrix != NULL) {
         if(matrix->matrix != NULL) {
-            for(int i = 0; i < matrix->size; i++) {
-                free(matrix->matrix[i]);
-            }
-            free(matrix->matrix);
+            free(matrix->matrix[0]); // 3. Frees the giant integer block 'all_data'
+            free(matrix->matrix);    // 2. Frees the array of row pointers
         }
-        free(matrix);
+        free(matrix);                // 1. Frees the struct itself
     }
 }
