@@ -1,7 +1,14 @@
+"""
+Module providing a function to generate a spiral matrix.
+"""
+
 def spiral_matrix(size):
+    """
+    Given the size, return a square matrix of numbers in clockwise spiral order.
+    """
     matrix = []
     if size > 0:
-        matrix = [[0 for _ in range(size)] for _ in range(size)]
+        matrix = [[0 for col in range(size)] for row in range(size)]
 
         top_row = 0
         bottom_row = size - 1
