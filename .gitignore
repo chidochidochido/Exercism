@@ -16,6 +16,7 @@
 # Ignore instructions and help files inside exercise directories
 */*/HELP.md
 */*/README.md
+*/*/.gitignore
 
 # ==========================================
 # Language-Specific Rules
@@ -26,6 +27,9 @@
 */*/makefile
 */*/CMakeLists.txt
 **/build/
+**/Testing/
+c/**/*.go
+c/**/*.js
 
 # Ignore test frameworks and unit tests inside exercise directories
 */*/test-framework/
@@ -54,8 +58,10 @@
 # --- Rust ---
 # Ignore Rust build target directories and locks
 **/target/
+**/Cargo.toml
 **/Cargo.lock
 **/*.rs.bk
+*/*/tests/
 
 # --- Elixir ---
 # Ignore Mix build directories, dependencies, and cover reports
@@ -66,3 +72,5 @@
 **/.elixir_ls/
 *.ez
 erl_crash.dump
+*/*/mix.exs
+*/*/.formatter.exs
