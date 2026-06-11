@@ -1,49 +1,42 @@
 #include "twelve_days.h"
 
-#include <array>
+#include <map>
 #include <string>
+#include <utility>
 
 namespace twelve_days {
 
-const std::array<std::string, 12> DAYS = {
-    "first", "second", "third", "fourth", "fifth", "sixth",
-    "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"
-};
-
-const std::array<std::string, 12> GIFTS = {
-    "a Partridge in a Pear Tree.\n",
-    "two Turtle Doves, and ",
-    "three French Hens, ",
-    "four Calling Birds, ",
-    "five Gold Rings, ",
-    "six Geese-a-Laying, ",
-    "seven Swans-a-Swimming, ",
-    "eight Maids-a-Milking, ",
-    "nine Ladies Dancing, ",
-    "ten Lords-a-Leaping, ",
-    "eleven Pipers Piping, ",
-    "twelve Drummers Drumming, "
+const std::map<int, std::pair<std::string, std::string>> LYRICS = {
+    {1, {"first", "a Partridge in a Pear Tree.\n"}},
+    {2, {"second", "two Turtle Doves, and "}},
+    {3, {"third", "three French Hens, "}},
+    {4, {"fourth", "four Calling Birds, "}},
+    {5, {"fifth", "five Gold Rings, "}},
+    {6, {"sixth", "six Geese-a-Laying, "}},
+    {7, {"seventh", "seven Swans-a-Swimming, "}},
+    {8, {"eighth", "eight Maids-a-Milking, "}},
+    {9, {"ninth", "nine Ladies Dancing, "}},
+    {10, {"tenth", "ten Lords-a-Leaping, "}},
+    {11, {"eleventh", "eleven Pipers Piping, "}},
+    {12, {"twelfth", "twelve Drummers Drumming, "}}
 };
 
 std::string recite(int start_verse, int end_verse)
 {
     if(start_verse <= 0 || end_verse <= 0 || start_verse > end_verse)
         return "";
-
-    const int start_day = start_verse - 1;
-    const int end_day = end_verse - 1;
     
     std::string result = "";
     result.reserve(2000);
-    for(int day_index = start_day; day_index <= end_day; day_index++)
+    for(int day_index = start_verse; day_index <= end_verse; day_index++)
     {
-        result += "On the " + DAYS[day_index] + " day of Christmas my true love gave to me: ";
-        for(int gift_index = day_index; gift_index >= 0; gift_index--)
+        result += "On the " + LYRICS.at(day_index).first + " day of Christmas my true love gave to me: ";
+        for(int gift_index = day_index; gift_index >= 1; gift_index--)
         {
-            result += GIFTS[gift_index];
+            result += LYRICS.at(gift_index).second;
         }
 
-        if(day_index < end_day) {
+        if(day_index < end_verse) {
             result += '\n';
         }
     }
