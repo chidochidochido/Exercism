@@ -1,3 +1,7 @@
+"""
+Module providing a function to recite verses of "The Twelve Days of Christmas".
+"""
+
 LYRICS = {
     1: ("first", "a Partridge in a Pear Tree."),
     2: ("second", "two Turtle Doves, and "),
@@ -14,8 +18,11 @@ LYRICS = {
 }
 
 def recite(start_verse, end_verse):
+    """
+    Returns a list of verses from start_verse to end_verse.
+    """
     if start_verse <= 0 or end_verse <= 0 or start_verse > end_verse:
-        return
+        return []
         
     result = []
     for day_index in range(start_verse, end_verse + 1):
