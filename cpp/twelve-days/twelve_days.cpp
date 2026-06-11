@@ -34,19 +34,18 @@ std::string recite(int start_verse, int end_verse)
     const int end_day = end_verse - 1;
     
     std::string result = "";
+    result.reserve(2000);
     for(int day_index = start_day; day_index <= end_day; day_index++)
     {
-        std::string current_verse = "On the " + DAYS[day_index] + " day of Christmas my true love gave to me: ";
+        result += "On the " + DAYS[day_index] + " day of Christmas my true love gave to me: ";
         for(int gift_index = day_index; gift_index >= 0; gift_index--)
         {
-            current_verse += GIFTS[gift_index];
+            result += GIFTS[gift_index];
         }
 
         if(day_index < end_day) {
-            current_verse += '\n';
+            result += '\n';
         }
-
-        result += current_verse;
     }
 
     return result;
