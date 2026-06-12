@@ -9,7 +9,7 @@ defmodule TwelveDays do
 
     gifts =
       number..1//-1
-      |> Enum.map(fn n -> gift(n) end)
+      |> Enum.map(&gift/1)
       |> Enum.join("")
 
     intro <> gifts
@@ -22,7 +22,7 @@ defmodule TwelveDays do
   @spec verses(starting_verse :: integer, ending_verse :: integer) :: String.t()
   def verses(starting_verse, ending_verse) do
     starting_verse..ending_verse
-    |> Enum.map(fn n -> verse(n) end)
+    |> Enum.map(&verse/1)
     |> Enum.join("\n")
   end
 
