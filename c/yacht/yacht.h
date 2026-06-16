@@ -2,7 +2,7 @@
 #define YACHT_H
 
 typedef enum {
-   ONES,
+   ONES = 1,
    TWOS,
    THREES,
    FOURS,
