@@ -22,18 +22,28 @@ int score(const std::vector<int>& dice, const std::string& category) {
         return (has_three && has_two) ? total_sum : 0;
     }
 
-    if (category == "full house") {
-        bool has_three = std::any_of(counts.begin(), counts.end(), [](int c) { return c == 3; });
-        bool has_two   = std::any_of(counts.begin(), counts.end(), [](int c) { return c == 2; });
-        return (has_three && has_two) ? total_sum : 0;
+    if (category == "four of a kind") {
+        for (int i = 1; i <= 6; ++i) {
+            if (counts[i] >= 4) {
+                return i * 4;
+            }
+        }
+        return 0;
     }
 
-    "four of a kind"
-    "little straight"
-    "big straight"
-    "choice"
-    "yacht"
+    if (category == "little straight")
+        if(counts[1] == 1 && counts[2] == 1 && counts[3] == 1 && counts[4] == 1 && counts[5] == 1) return 30;
+    
+    if (category == "big straight")
+        if(counts[2] == 1 && counts[3] == 1 && counts[4] == 1 && counts[5] == 1 && counts[6] == 1) return 30;
 
+    if (category == "choice")
+        return total_sum;
+
+    if (category == "yacht")
+        return std::any_of(counts.begin(), counts.end(), [](int c) { return c == 5; }) ? 50 : 0;
+
+    return 0;
 }
 
 }  // namespace yacht
