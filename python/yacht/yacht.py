@@ -1,3 +1,5 @@
+"""Module for scoring a Yacht dice game roll based on categories."""
+
 # Score categories.
 # Change the values as you see fit.
 YACHT = 0
@@ -13,9 +15,8 @@ LITTLE_STRAIGHT = 9
 BIG_STRAIGHT = 10
 CHOICE = 11
 
-
-
 def score(dice, category):
+    """Calculate the score of a 5-dice roll for a given category."""
     if category == YACHT:
         return 50 if len(set(dice)) == 1 else 0
 
@@ -23,16 +24,15 @@ def score(dice, category):
         return dice.count(category) * category
 
     if category == FULL_HOUSE:
-        return sum(dice) if sorted(dice.count(x) for x in set(dice)) == [2, 3] else 0
-    
+        return sum(dice) if sorted(dice.count(die) for die in set(dice)) == [2, 3] else 0
+
     if category == CHOICE:
         return sum(dice)
 
     if category == FOUR_OF_A_KIND:
-        # We can iterate unique values in set(dice)
-        for x in set(dice):
-            if dice.count(x) >= 4:
-                return x * 4
+        for die in set(dice):
+            if dice.count(die) >= 4:
+                return die * 4
         return 0
 
     if category == LITTLE_STRAIGHT:
@@ -40,3 +40,5 @@ def score(dice, category):
 
     if category == BIG_STRAIGHT:
         return 30 if sorted(dice) == [2, 3, 4, 5, 6] else 0
+
+    return 0
